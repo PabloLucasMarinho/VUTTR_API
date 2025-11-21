@@ -14,10 +14,18 @@ class ToolsController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-    $user = request()->user();
-    $tools = $user->tools()->get();
+    $query = $request->user()->tools()->with('tags');
+
+    if ($request->has('tag')) {
+      $query->whereHas('tags', function ($q) use ($request) {
+        $q->where('name', $request->tag);
+      });
+    }
+
+    $tools = $query->get();
+
     return response()->json(ToolsResource::collection($tools));
   }
 
