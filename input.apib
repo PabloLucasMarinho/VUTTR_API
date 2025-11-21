@@ -1,0 +1,58 @@
+FORMAT: 1A
+HOST: http://localhost:3000/api
+
+# VUTTR (Very Useful Tools To Remember)
+
+VUTTR é uma API simples que permite que os usuários tenham onde guardar e ter fácil acesso às ferramentas que eles julgam ser úteis.
+
+## Informações do Servidor
+
+Esta API está configurada para rodar localmente. Certifique-se de que o seu servidor Laravel esteja rodando na porta correta.
+
+**Base URL:** `http://localhost:3000` (Ambiente de Desenvolvimento)
+
+### Como rodar o projeto
+Para iniciar o servidor na porta correta, utilize o comando abaixo no terminal do projeto:
+
+```bash
+php artisan serve --port=3000
+```
+
+# Group Usuário
+
+## Registro de Usuário [/register]
+
+### Criar usuário [POST]
+
++ Request (application/json)
+    + Attributes (NovoUsuario)
+
++ Response 201 (application/json)
+    + Attributes (Usuario)
+
+## Login de Usuário [/login]
+
+### Fazer login [POST]
+
++ Request (application/json)
+    + Attributes
+        + email: joao@email.com (string, required)
+        + password: `secret@1234` (string, required)
+
++ Response 200 (application/json)
+    + Attributes (object)
+        + user (Usuario)
+        + token: `1|cB2S6PJDxnNshb7NvOxtc9V3MVsrCoBpmD2sv0cl5df0f08f` (string)
+
+# Data Structures
+
+## NovoUsuario (object)
++ name: João Silva (string, required)
++ email: joao@email.com (string, required)
++ password: `secret@1234` (string, required)
++ password_confirmation: `secret@1234` (string, required)
+
+## Usuario (object)
++ id: 1 (number)
++ name: João Silva (string)
++ email: joao@email.com (string)
