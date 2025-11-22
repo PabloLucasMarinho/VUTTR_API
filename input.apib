@@ -20,39 +20,260 @@ php artisan serve --port=3000
 
 # Group Usuário
 
-## Registro de Usuário [/register]
+## Cadastrar Usuário [/register]
 
 ### Criar usuário [POST]
 
-+ Request (application/json)
-    + Attributes (NovoUsuario)
++ Request
 
-+ Response 201 (application/json)
-    + Attributes (Usuario)
+    + Headers
 
-## Login de Usuário [/login]
+        Accept: application/json
+
+    + Body
+
+        {
+            "name": "João Silva",
+            "email": "joaosilva@email.com",
+            "password": "password@1234",
+            "confirm_password": "password@1234"
+        }
+
++ Response 201
+
+## Logar Usuário [/login]
 
 ### Fazer login [POST]
 
-+ Request (application/json)
-    + Attributes
-        + email: joao@email.com (string, required)
-        + password: `secret@1234` (string, required)
++ Request
+
+    + Headers
+
+        Accept: application/json
+
+    + Body
+
+        {
+            "email": "joaosilva@email.com",
+            "password": "password@1234",
+        }
 
 + Response 200 (application/json)
-    + Attributes (object)
-        + user (Usuario)
-        + token: `1|cB2S6PJDxnNshb7NvOxtc9V3MVsrCoBpmD2sv0cl5df0f08f` (string)
 
-# Data Structures
+    + Body
+        
+        {
+            "user": {
+                "id": 1,
+                "name": "João Silva",
+                "email": "joaosilva@email.com",
+            },
+            "token": "1|cB2S6PJDxnNshb7NvOxtc9V3MVsrCoBpmD2sv0cl5df0f08f"
+        }
 
-## NovoUsuario (object)
-+ name: João Silva (string, required)
-+ email: joao@email.com (string, required)
-+ password: `secret@1234` (string, required)
-+ password_confirmation: `secret@1234` (string, required)
+## Deslogar Usuário [/logout]
 
-## Usuario (object)
-+ id: 1 (number)
-+ name: João Silva (string)
-+ email: joao@email.com (string)
+### Fazer logout [POST]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 204
+
+# Group Ferramentas
+
+## Cadastrar e Listar Ferramentas [/tools]
+
+### Cadastrar Ferramenta [POST]
+
++ Request
+
+    + Headers
+
+        Accept: application/json
+        Authorization: Bearer {token}
+
+    + Body
+
+        {
+            "title": "Notion",
+            "link": "https://notion.so",
+            "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized.",
+            "tags": [
+                "organization",
+                "planning",
+                "collaboration",
+                "writing",
+                "calendar"
+            ]
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 1,
+            "title": "Notion",
+            "link": "https://notion.so",
+            "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized.",
+            "tags": [
+                "organization",
+                "planning",
+                "collaboration",
+                "writing",
+                "calendar"
+            ]
+        }
+
+### Listar todas as Ferramentas [GET]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "title": "Notion",
+                "link": "https://notion.so",
+                "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized.",
+                "tags": [
+                    "organization",
+                    "planning",
+                    "collaboration",
+                    "writing",
+                    "calendar"
+                ]
+            },
+            {
+                "id": 2,
+                "title": "json-server",
+                "link": "https://github.com/typicode/json-server",
+                "description": "Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.",
+                "tags": [
+                    "api",
+                    "json",
+                    "schema",
+                    "node",
+                    "github",
+                    "rest"
+                ]
+            }
+        ]
+
+## Filtrar por Tags [/tools?tag={tag}]
+
++ Parameters
+
+    + tag: node (string, optional)
+
+### Filtrar Ferramenta [GET]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 201 (application/json)
+
+        {
+            "id": 1,
+            "title": "Notion",
+            "link": "https://notion.so",
+            "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized.",
+            "tags": [
+                "organization",
+                "planning",
+                "collaboration",
+                "writing",
+                "calendar"
+            ]
+        }
+
+## Listar por ID, Atualizar e Deletar [/tools/{id}]
+
++ Parameters
+
+    + id: 1 (number)
+
+### Listar Ferramenta por ID [GET]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "title": "Notion",
+            "link": "https://notion.so",
+            "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized.",
+            "tags": [
+                "organization",
+                "planning",
+                "collaboration",
+                "writing",
+                "calendar"
+            ]
+        },
+
+### Atualizar Ferramenta [PUT]
+
++ Request
+
+    + Headers
+
+        Accept: application/json
+        Authorization: Bearer {token}
+
+    + Body
+        {
+            "title": "fastify",
+            "link": "https://www.fastify.io",
+            "description": "Extremely fast and simple, low-overhead web framework for NodeJS. Supports HTTP2.",
+            "tags": [
+                "web",
+                "framework",
+                "node",
+                "http2",
+                "https",
+                "localhost"
+            ]
+        },
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "title": "fastify",
+            "link": "https://www.fastify.io",
+            "description": "Extremely fast and simple, low-overhead web framework for NodeJS. Supports HTTP2.",
+            "tags": [
+                "web",
+                "framework",
+                "node",
+                "http2",
+                "https",
+                "localhost"
+            ]
+        },
+
+### Atualizar Ferramenta [DELETE]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 204
