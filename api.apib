@@ -1,0 +1,234 @@
+FORMAT: 1A
+HOST: http://localhost:3000/api
+
+# VUTTR (Very Useful Tools To Remember)
+
+VUTTR é uma API simples que permite que os usuários tenham onde guardar e ter fácil acesso às ferramentas que eles julgam ser úteis.
+
+## Informações do Servidor
+
+Esta API está configurada para rodar localmente. Certifique-se de que o seu servidor Laravel esteja rodando na porta correta.
+
+**Base URL:** `http://localhost:3000` (Ambiente de Desenvolvimento)
+
+### Como rodar o projeto
+Para iniciar o servidor na porta correta, utilize o comando abaixo no terminal do projeto:
+
+```bash
+php artisan serve --port=3000
+```
+
+# Group Usuário
+
+## Cadastrar Usuário [/register]
+
+### Criar usuário [POST]
+
++ Request
+
+    + Headers
+
+        Accept: application/json
+
+    + Attributes (InputUser)
+
++ Response 201
+
+## Logar Usuário [/login]
+
+### Fazer login [POST]
+
++ Request
+
+    + Headers
+
+        Accept: application/json
+
+    + Attributes (Login)
+
++ Response 200 (application/json)
+
+    + Attributes (ResponseLogin)
+
+## Deslogar Usuário [/logout]
+
+### Fazer logout [POST]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 204
+
+# Group Ferramentas
+
+## Cadastrar e Listar Ferramentas [/tools]
+
+### Cadastrar Ferramenta [POST]
+
++ Request
+
+    + Headers
+
+        Accept: application/json
+        Authorization: Bearer {token}
+
+    + Attributes (InputTool)
+
++ Response 201 (application/json)
+
+  + Attributes (ResponseTool)
+
+### Listar todas as Ferramentas [GET]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 200 (application/json)
+
+  + Attributes (GetAllTools)
+
+## Filtrar por Tags [/tools?tag={tag}]
+
++ Parameters
+
+    + tag: node (string, optional)
+
+### Filtrar Ferramenta [GET]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 201 (application/json)
+
+    + Attributes (FilteredTools)
+
+## Listar por ID, Atualizar e Deletar [/tools/{id}]
+
++ Parameters
+
+    + id: 1 (number)
+
+### Listar Ferramenta por ID [GET]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 200 (application/json)
+
+    + Attributes (ResponseTool)
+
+### Atualizar Ferramenta [PUT]
+
++ Request
+
+    + Headers
+
+        Accept: application/json
+        Authorization: Bearer {token}
+
+    + Attributes (UpdateTool)
+
++ Response 200 (application/json)
+
+    + Attributes (UpdateToolResponse)
+
+### Atualizar Ferramenta [DELETE]
+
++ Request
+
+    + Headers
+
+        Authorization: Bearer {token}
+
++ Response 204
+
+## Data Structures
+
+### InputUser
++ name: João Silva (string, required)
++ email: joaosilva@email.com (string, required)
++ password: secret@1234 (string, required)
++ confirm_password: secret@1234 (string, required)
+
+### Login
++ email: joaosilva@email.com (string, required)
++ password: secret@1234 (string, required)
+
+### ResponseLogin
++ user: (object)
+  + id: 1 (number)
+  + name: João Silva (string)
+  + email: joaosilva@email.com (string)
++ token: 4|5NH8dy5aqZHComLpmXCb3WOyIj7zSoXRLucKBShEa2241cf1 (string)
+
+### InputTool
++ title: Notion (required)
++ link: https://notion.so (required)
++ description: All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. (string, required)
++ tags: organization, planning, collaboration, writing, calendar (array[string])
+
+### ResponseTool
++ id: 1 (number)
++ title: Notion (string)
++ link: https://notion.so (string)
++ description: All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. (string)
++ tags: organization, planning, collaboration, writing, calendar (array[string])
+
+### GetAllTools (array)
++ (object)
+    + id: 1 (number)
+    + title: Notion (string)
+    + link: https://notion.so (string)
+    + description: All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. (string)
+    + tags: organization, planning, collaboration, writing, calendar (array[string])
++ (object)
+    + id: 2 (number)
+    + title: json-server (string)
+    + link: https://github.com/typicode/json-server (string)
+    + description: Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges. (string)
+    + tags: api, json, schema, node, github, rest (array[string])
++ (object)
+    + id: 3 (number)
+    + title: fastify (string)
+    + link: https://www.fastify.io (string)
+    + description: Extremely fast and simple, low overhead web framework for NodeJS. Supports HTTP2. (string)
+    + tags: web, framework, node, http2, https, localhost, (array[string])
+
+### FilteredTools (array)
++ (object)
+    + id: 2 (number)
+    + title: json-server (string)
+    + link: https://github.com/typicode/json-server (string)
+    + description: Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges. (string)
+    + tags: api, json, schema, node, github, rest (array[string])
++ (object)
+    + id: 3 (number)
+    + title: fastify (string)
+    + link: https://www.fastify.io (string)
+    + description: Extremely fast and simple, low overhead web framework for NodeJS. Supports HTTP2. (string)
+    + tags: web, framework, node, http2, https, localhost, (array[string])
+
+### UpdateTool
++ title: hotel (string)
++ link: https://github.com/typicode/hotel (string)
++ description: All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. (string)
++ tags: node, organizing, webapps, domain, developer, https, proxy (array[string])
+
+### UpdateToolResponse
++ id: 1 (number)
++ title: hotel (string)
++ link: https://github.com/typicode/hotel (string)
++ description: All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. (string)
++ tags: node, organizing, webapps, domain, developer, https, proxy (array[string])
