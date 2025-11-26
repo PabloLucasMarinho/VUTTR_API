@@ -35,4 +35,4 @@ Se você estiver utilizando o Laravel Herd, é necessário configurar na sessão
 
 ## Instruções de Uso
 
-A documentação completa das rotas e do formato das requisições e respostas, se encontra no arquivo [doc.html](), na raiz do projeto.
+A documentação completa das rotas e do formato das requisições e respostas, se encontra no arquivo [doc.html](https://pablolucasmarinho.github.io/VUTTR_API/), na raiz do projeto.
